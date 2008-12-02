@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env bash
+
+. "$TM_SUPPORT_PATH/lib/webpreview.sh"
+html_header "IPython Quick Reference Card" "IPython"
+
+echo "&lt;pre&gt;"
+ipython -c "%quickref"
+echo "&lt;/pre&gt;"
+
+html_footer
+</string>
+	<key>fallbackInput</key>
+	<string>none</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^I</string>
+	<key>name</key>
+	<string>Ipython quick reference card</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>source.python</string>
+	<key>uuid</key>
+	<string>B3FDAF77-EA3E-4F2E-97CB-E14CCF1A88CB</string>
+</dict>
+</plist>

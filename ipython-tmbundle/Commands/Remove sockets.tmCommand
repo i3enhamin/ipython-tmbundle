@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#! /usr/bin/env python
+
+import os
+import sys
+
+sys.path.append(os.environ['TM_BUNDLE_SUPPORT'] + '/lib')
+
+from ipythonDialog import get_confirmation, html_tooltip
+from ipythonClient import list_sockets, remove_sockets
+
+body="""There are socket files in the socket directory. 
+They will be removed if you continue. You cannot undo this action."""
+
+title='This command will remove all sockets from ~/.ipythonrc'
+
+if not list_sockets():
+    html_tooltip(text='No sockets to remove')
+elif get_confirmation(body_text=body, title_text=title):
+    remove_sockets()
+    html_tooltip(text='Removed sockets')
+else:
+    html_tooltip(text='Cancelled operation')</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^I</string>
+	<key>name</key>
+	<string>Remove sockets</string>
+	<key>output</key>
+	<string>afterSelectedText</string>
+	<key>scope</key>
+	<string>source.python,</string>
+	<key>uuid</key>
+	<string>661F94B3-543F-4FD6-BA06-02F03CAA88C7</string>
+</dict>
+</plist>

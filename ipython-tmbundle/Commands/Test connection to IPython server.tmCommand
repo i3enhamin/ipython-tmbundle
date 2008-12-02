@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env python
+# Command to test the use of a dialog.
+
+import sys, os
+import time
+
+sys.path.append(os.environ['TM_SUPPORT_PATH'] + '/lib')
+sys.path.append(os.environ['TM_BUNDLE_SUPPORT'] + '/lib')
+
+import dialog
+import webpreview
+from ipythonMate import *
+import ipythonClient as client
+
+print webpreview.html_header("IPython Server Connection Test", "")
+
+time_string = time.asctime()
+
+print """&lt;p&gt;If successful, you should see the follow text appear in your IPython session:&lt;/p&gt;
+ 
+&lt;code&gt;&lt;pre&gt;TextMate Connection established at %s&lt;/pre&gt;&lt;/code&gt;
+
+&lt;p&gt;You should also see a Growl notification.&lt;/p&gt;
+
+&lt;o&gt;If you have more than one instance of IPython running, you may need to select which session to connect to. If this is the case, you will see a small dialog box. Note that ths dialog will not necessarily appear close to your editor window.&lt;/p&gt;
+
+""" % time_string
+
+print webpreview.html_footer()
+
+sock = client.determine_socket()
+if sock == None:
+	connected = False
+else:
+	connected = client.connect(sock)
+
+if connected: 
+	notify_with_growl("IPython Script", 'Connected to IPython session: ' + os.path.basename(sock))
+	client.send('print "TextMate Connection established at %s"\n\r' % time_string)
+	client.disconnect()
+else:
+	notify_with_growl("IPython Script", 'Failed to connect to IPython session')
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^I</string>
+	<key>name</key>
+	<string>Test connection to IPython server</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>source.python</string>
+	<key>uuid</key>
+	<string>280E16F1-814E-4B3A-BB65-97F3F4B71670</string>
+</dict>
+</plist>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>saveActiveFile</string>
+	<key>command</key>
+	<string>#!/usr/bin/env python
+
+import sys, os
+sys.path.append(os.environ['TM_SUPPORT_PATH'] + '/lib')
+sys.path.append(os.environ['TM_BUNDLE_SUPPORT'] + '/lib')
+
+from ipythonMate import notify_with_growl
+from ipythonDialog import html_tooltip
+import ipythonClient as client
+
+try:
+	run_options = os.environ['TM_RUN_OPTIONS'] + ' '
+except KeyError:
+	run_options = '-e -i -n '
+
+text='%run ' + run_options + '  ' + os.environ.get('TM_FILEPATH')
+
+if client.find_server_then_connect(): 
+	client.send(text)
+	client.disconnect()
+	notify_with_growl("IPython Script", 'Ran ' + os.path.basename(os.environ.get('TM_FILEPATH')))
+else:
+	notify_with_growl("IPython Script", 'Failed to connect to IPython session: ' + os.path.basename(sock))</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^I</string>
+	<key>name</key>
+	<string>Run file</string>
+	<key>output</key>
+	<string>discard</string>
+	<key>scope</key>
+	<string>source.python</string>
+	<key>uuid</key>
+	<string>842C84A4-49F2-4114-BAFF-D1D128F3AC9B</string>
+</dict>
+</plist>

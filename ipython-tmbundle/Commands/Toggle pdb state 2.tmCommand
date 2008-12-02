@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>saveActiveFile</string>
+	<key>command</key>
+	<string>#! /usr/bin/env python
+import sys, os
+
+sys.path.append(os.environ['TM_BUNDLE_SUPPORT'] + '/lib')
+from ipythonMate import *
+
+try:
+	cmd=os.environ['TM_IPYTHON']
+except KeyError:
+	cmd='ipython'
+
+run_in_terminal('%pdb', command=cmd)
+notify_with_growl("IPython Script", 'Toggled debugger (pdb) state')</string>
+	<key>input</key>
+	<string>none</string>
+	<key>name</key>
+	<string>Toggle pdb state</string>
+	<key>output</key>
+	<string>discard</string>
+	<key>scope</key>
+	<string>source.python</string>
+	<key>uuid</key>
+	<string>8D8CFBA5-3B71-4A3F-882B-9A461DD8C008</string>
+</dict>
+</plist>
